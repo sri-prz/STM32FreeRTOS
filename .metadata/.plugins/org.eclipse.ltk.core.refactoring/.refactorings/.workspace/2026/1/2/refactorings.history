@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;5_ChangingPriorityinRuntime&apos; to &apos;5_ChangingPriorityInRuntime&apos;" description="Rename resource &apos;5_ChangingPriorityinRuntime&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/5_ChangingPriorityinRuntime" name="5_ChangingPriorityInRuntime" stamp="1767507875618" updateReferences="true"/>
+</session>
