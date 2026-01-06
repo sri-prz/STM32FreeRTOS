@@ -1,6 +1,4 @@
-2026-01-04 13:00:00,349 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
-2026-01-04 13:00:01,225 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
-2026-01-04 13:00:01,260 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
-2026-01-04 13:04:42,823 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
-2026-01-04 13:04:42,829 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
-2026-01-04 13:04:42,833 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-01-05 15:25:43,451 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 15:25:43.313 ERROR Chromium process exit code: 139
+2026-01-05 15:25:43,479 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 
+2026-01-05 15:25:43,487 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 15:25:43.483 ERROR Crash dump dir: /Users/sheen/Library/Application Support/JxBrowser/7.41.4/CrashReports
+2026-01-05 15:25:43,488 [ERROR] LogOutputStream:75 - [STDERR_REDIRECT] 

@@ -76,6 +76,7 @@ void vGreenLedControllerTask(void * pvParameters)
 
 void vApplicationIdleHook(void)
 {
+	//Do something
 	IdleTaskProfiler++;
 }
 
