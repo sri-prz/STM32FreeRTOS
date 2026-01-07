@@ -1,4 +1,4 @@
-23:31:41 **** Incremental Build of configuration Debug for project 16_SendingCmplxDataWithQueues ****
+12:36:51 **** Incremental Build of configuration Debug for project 16_SendingCmplxDataWithQueues ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "16_SendingCmplxDataWithQueues.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/16_SendingCmplxDataWithQueues/STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="16_SendingCmplxDataWithQueues.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -7,7 +7,7 @@ Finished building target: 16_SendingCmplxDataWithQueues.elf
 arm-none-eabi-size  16_SendingCmplxDataWithQueues.elf 
 arm-none-eabi-objdump -h -S 16_SendingCmplxDataWithQueues.elf  > "16_SendingCmplxDataWithQueues.list"
    text	   data	    bss	    dec	    hex	filename
-  25264	    108	  20828	  46200	   b478	16_SendingCmplxDataWithQueues.elf
+  25000	    108	  20836	  45944	   b378	16_SendingCmplxDataWithQueues.elf
 Finished building: default.size.stdout
  
 Finished building: 16_SendingCmplxDataWithQueues.list

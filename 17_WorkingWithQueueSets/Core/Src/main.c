@@ -21,103 +21,92 @@ int uart2_write(int ch)
 }
 
 
-void ReceiverTask(void * pvParameters);
-
-void SenderTask(void * pvParameters);
-
 int __io_putchar(int ch);
 
 
-typedef enum
-{
-	humidity_sensor,
-	pressure_sensor
-}DataSource_t;
+//Declare two queues
+static QueueHandle_t xQueue1 = NULL, xQueue2 = NULL;
 
-typedef struct
-{
-	uint8_t ucValue;
-	DataSource_t sDataSource;
-} Data_t;
+//Declare a queue set
+static QueueSetHandle_t xQueueSet=NULL;
 
-
-static const Data_t xStructsToSend[2] = {{77, humidity_sensor},{63,pressure_sensor}};
-
-TaskHandle_t hum_task_handle, press_task_handle, receiver_handle;
-QueueHandle_t xQueue;
+void vSenderTask1(void *pvParameters);
+void vSenderTask2(void *pvParameters);
+void vReceiverTask(void *pvParameters);
 
 int main(void)
 {
 
 
-  HAL_Init(); //hardware abstraction layer
-  SystemClock_Config();
-  MX_GPIO_Init();
-  MX_USART2_UART_Init();
+	HAL_Init(); //hardware abstraction layer
+	SystemClock_Config();
+	MX_GPIO_Init();
+	MX_USART2_UART_Init();
 
-  //create queue to hold a maximum of 3 structures
+	//create two queues, each sends a character pointer
+	xQueue1=xQueueCreate(1,sizeof(char *));
+	xQueue2=xQueueCreate(1,sizeof(char *));
 
-  xQueue = xQueueCreate(3,sizeof(Data_t));
+	/*Create the sender tasks*/
+	xTaskCreate(vSenderTask1, "sender1",100,NULL,1,NULL);
+	xTaskCreate(vSenderTask2, "sender2",100,NULL,1,NULL);
+	/*Create the receiver task*/
+	xTaskCreate(vReceiverTask, "Receiver",100,NULL,2,NULL);
 
-  //create a receiver task  with a priority of 1
-  xTaskCreate(ReceiverTask, "Receiver Task", 100, NULL, 1, &receiver_handle);
+	vTaskStartScheduler();
 
+	while (1)
+	{
 
- //Create task to send humidity data with a priority of 2
-  xTaskCreate(SenderTask, "Humidity Sender Task ", 100, (void *) &(xStructsToSend[0]), 2, &hum_task_handle);
+	}
 
-  //Create task to send pressure data with a priority of 2
-  xTaskCreate(SenderTask, "Pressure Sender Task ", 100, (void *) &(xStructsToSend[1]), 2, &press_task_handle);
-
-  vTaskStartScheduler();
-
-  return 0;
 
 }
 
-void ReceiverTask(void * pvParameters)
+void vSenderTask1(void *pvParameters)
 {
-	Data_t xReceivedStructure;
-
-	BaseType_t qStatus;
-
+	const TickType_t xBlockTime = pdMS_TO_TICKS(100);
+	const char *const msg ="Message from vSenderTask1\r\n";
 	while(1)
 	{
-		qStatus = xQueueReceive(xQueue, &xReceivedStructure, 0);
-
-		if(qStatus == pdPASS)
-		{
-			if(xReceivedStructure.sDataSource == humidity_sensor)
-			{
-				printf("Humidity sensor value = %d \n\r", xReceivedStructure.ucValue);
-			}
-			else{
-				printf("Pressure sensor value = %d \n\r", xReceivedStructure.ucValue);
-			}
-		}
-		else
-		{
-			//do something
-		}
+		//block for 100 ms
+		vTaskDelay(xBlockTime);
+		//send msg
+		xQueueSend(xQueue1,&msg,0);
 	}
+
 }
 
-void SenderTask(void * pvParameters)
+void vSenderTask2(void *pvParameters)
 {
-	BaseType_t qStatus;
-
-	const TickType_t wait_time = pdMS_TO_TICKS(200);
-
+	const TickType_t xBlockTime = pdMS_TO_TICKS(200);
+	const char *const msg ="Message from vSenderTask2\r\n";
 	while(1)
 	{
-		qStatus = xQueueSend(xQueue,pvParameters,wait_time);
-		if(qStatus != pdPASS)
-		{
-			//Do something
-		}
-		for(int i = 0; i< 100000; i++){}
+		//block for 200 ms
+		vTaskDelay(xBlockTime);
+		//send message
+		xQueueSend(xQueue1,&msg,0);
+
 	}
+
 }
+
+void vReceiverTask(void *pvParameters)
+{
+	//create queue to take in data
+	QueueHandle_t xQueueThatContainsData;
+	char *pcReceivedString;
+	while(1)
+	{
+		//block indefinitely until data comes in
+		xQueueThatContainsData=(QueueHandle_t )xQueueSelectFromSet(xQueueSet,portMAX_DELAY);
+		xQueueReceive(xQueueThatContainsData,&pcReceivedString,0); //pass in handle of queue data comes from
+		printf(pcReceivedString);
+	}
+
+}
+
 
 
 

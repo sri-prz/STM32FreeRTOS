@@ -1,68 +1,139 @@
+
 #include "main.h"
 #include "cmsis_os.h"
-#include <stdio.h>
+#include "stdio.h"
 
 UART_HandleTypeDef huart2;
 
-
-/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 
-int uart2_write(int ch)
+typedef enum
+	{
+	humidity_sensor,
+	pressure_sensor
+	}DataSource_t;
+
+typedef struct
+	{
+	uint8_t ucValue;
+	DataSource_t sDataSource;
+	}Data_t;
+
+
+static const Data_t xStructToSend[2]=
+	{
+		{77,humidity_sensor},
+		{63,pressure_sensor}
+	};
+
+
+TaskHandle_t hum_task_handle,press_task_handle,receiver_handle;
+
+QueueHandle_t xQueue;
+
+Data_t xReceiveStructe;
+
+void ReceiverTask(void *pvParameters);
+void SenderTask(void *pvParameters);
+
+int main(void)
 {
+  HAL_Init();
+
+
+  SystemClock_Config();
+  MX_GPIO_Init();
+  MX_USART2_UART_Init();
+  /*
+   * printf won't work sometimes if you didn't enable newlib for RTOS
+   * */
+
+
+  xTaskCreate(ReceiverTask, "Receiver Task", 100, NULL, 1, &receiver_handle);
+
+  xTaskCreate(SenderTask, "Humidity Sender Task", 100, (void *)&(xStructToSend[0]),
+  2, &hum_task_handle);
+
+  xTaskCreate(SenderTask, "pressure Sender Task", 100, (void *)&(xStructToSend[1]),
+  2, &press_task_handle);
+
+  vTaskStartScheduler();
+
+  while (1)
+  {
+
+  }
+
+}
+
+
+
+
+
+
+int uart2_write(int ch)
+	{
 	/*Make sure the transmit data register is empty*/
 	while(!(USART2->SR & USART_SR_TXE)){}
 
 	 /*Write to transmit data register*/
 	USART2->DR	=  (ch & 0xFF);
 	return ch;
-}
-
-
-int __io_putchar(int ch);
-
-
-//Declare two queues
-static QueueHandle_t xQueue1 = NULL, xQueue2 = NULL;
-
-//Declare a queue set
-static QueueSetHandle_t xQueueSet=NULL;
-
-int main(void)
-{
-
-
-  HAL_Init(); //hardware abstraction layer
-  SystemClock_Config();
-  MX_GPIO_Init();
-  MX_USART2_UART_Init();
-
-  //create two queues, each sends a character pointer
-  xQueue1=xQueueCreate(1,sizeof(char *));
-  xQueue2=xQueueCreate(1,sizeof(char *));
-
-  /*Create the sender tasks*/
-    xTaskCreate(vSenderTask1, "sender1",100,NULL,1,NULL);
-    xTaskCreate(vSenderTask2, "sender2",100,NULL,1,NULL);
-    /*Create the receiver task*/
-    xTaskCreate(vReceiverTask, "Receiver",100,NULL,2,NULL);
-
-    vTaskStartScheduler();
-
-
-}
-
-
-
-
+	}
 
 int __io_putchar(int ch)
-{
-	uart2_write(ch); //hover over defined functions to see parameters
-	return ch; //large timeout in UART transmit so use simple uart transmit funciton
-}
+	{
+	uart2_write(ch);
+	return ch;
+	}
+
+
+
+
+void SenderTask(void *pvParameters)
+	{
+	BaseType_t qState;
+	/*Enter the blocked state for 200ms for space to become
+	 * available in the queue each time the queue is full
+	 * */
+	const TickType_t wait_time=pdMS_TO_TICKS(200);
+	 xQueue=xQueueCreate(3,2);
+	while(1)
+		{
+		qState=xQueueSend(xQueue,pvParameters,wait_time);
+			if(qState !=pdPASS)
+				{/*Do something*/}
+			for (int i=0;i<100000;i++);
+
+		}
+
+	}
+
+
+void ReceiverTask(void *pvParameters)
+	{
+
+		BaseType_t qState;
+
+	while(1)
+			{
+			qState=xQueueReceive(xQueue, &xReceiveStructe, 0);
+			if(qState==pdPASS)
+				{
+				if(xReceiveStructe.sDataSource==pressure_sensor)
+					{
+					printf("pressure sensor value= %d\r\n",xReceiveStructe.ucValue);
+					}
+				if(xReceiveStructe.sDataSource==humidity_sensor)
+					{
+					printf("humidity sensor value= %d\r\n",xReceiveStructe.ucValue);
+					}
+
+				}
+			}
+	}
 
 
 void SystemClock_Config(void)
@@ -73,36 +144,28 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
-
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = 16;
-  RCC_OscInitStruct.PLL.PLLN = 336;
-  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
-  RCC_OscInitStruct.PLL.PLLQ = 2;
-  RCC_OscInitStruct.PLL.PLLR = 2;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
   }
-
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
     Error_Handler();
   }
@@ -148,54 +211,20 @@ static void MX_USART2_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : LD2_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
 
-/* USER CODE BEGIN Header_StartDefaultTask */
-/**
-  * @brief  Function implementing the defaultTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
-/* USER CODE END Header_StartDefaultTask */
-
 
 /**
   * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM1 interrupt took place, inside
+  * @note   This function is called  when TIM11 interrupt took place, inside
   * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
   * a global variable "uwTick" used as application time base.
   * @param  htim : TIM handle
@@ -206,8 +235,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM1)
-  {
+  if (htim->Instance == TIM11) {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
@@ -229,7 +257,8 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-#ifdef USE_FULL_ASSERT
+
+#ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
@@ -245,3 +274,4 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
