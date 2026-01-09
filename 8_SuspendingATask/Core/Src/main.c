@@ -68,7 +68,7 @@ void vRedLedControllerTask(void * pvParameters)
 		suspend_monitor++;
 
 		if(suspend_monitor >=50){
-			vTaskSpend(blue_handle); //use null or own task handle for task to suspend itself
+			vTaskSuspend(blue_handle); //use null or own task handle for task to suspend itself
 		}
 	}
 }

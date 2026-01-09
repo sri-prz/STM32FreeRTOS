@@ -47,6 +47,9 @@ int main(void)
 	xQueue1=xQueueCreate(1,sizeof(char *));
 	xQueue2=xQueueCreate(1,sizeof(char *));
 
+	//create queue set that holds two queues that hold one element each
+	xQueueSet = xQueueCreateSet(1*2);
+
 	/*Create the sender tasks*/
 	xTaskCreate(vSenderTask1, "sender1",100,NULL,1,NULL);
 	xTaskCreate(vSenderTask2, "sender2",100,NULL,1,NULL);
@@ -80,7 +83,7 @@ void vSenderTask1(void *pvParameters)
 void vSenderTask2(void *pvParameters)
 {
 	const TickType_t xBlockTime = pdMS_TO_TICKS(200);
-	const char *const msg ="Message from vSenderTask2\r\n";
+	const char *const msg ="Message from vSenderTask2\r\n"; //review consts
 	while(1)
 	{
 		//block for 200 ms
@@ -102,7 +105,7 @@ void vReceiverTask(void *pvParameters)
 		//block indefinitely until data comes in
 		xQueueThatContainsData=(QueueHandle_t )xQueueSelectFromSet(xQueueSet,portMAX_DELAY);
 		xQueueReceive(xQueueThatContainsData,&pcReceivedString,0); //pass in handle of queue data comes from
-		printf(pcReceivedString);
+		printf("%s",pcReceivedString);
 	}
 
 }

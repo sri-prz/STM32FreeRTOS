@@ -38,34 +38,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := 4_Task_Priority
+BUILD_ARTIFACT_NAME := 5_ChangingPriorityInRuntime
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-4_Task_Priority.elf \
+5_ChangingPriorityInRuntime.elf \
 
 MAP_FILES += \
-4_Task_Priority.map \
+5_ChangingPriorityInRuntime.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-4_Task_Priority.list \
+5_ChangingPriorityInRuntime.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: 4_Task_Priority.elf secondary-outputs
+main-build: 5_ChangingPriorityInRuntime.elf secondary-outputs
 
 # Tool invocations
-4_Task_Priority.elf 4_Task_Priority.map: $(OBJS) $(USER_OBJS) /Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/4_Task_Priority/STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "4_Task_Priority.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/4_Task_Priority/STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="4_Task_Priority.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+5_ChangingPriorityInRuntime.elf 5_ChangingPriorityInRuntime.map: $(OBJS) $(USER_OBJS) /Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/5_ChangingPriorityInRuntime/STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "5_ChangingPriorityInRuntime.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/5_ChangingPriorityInRuntime/STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="5_ChangingPriorityInRuntime.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -74,14 +74,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-4_Task_Priority.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "4_Task_Priority.list"
+5_ChangingPriorityInRuntime.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "5_ChangingPriorityInRuntime.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) 4_Task_Priority.elf 4_Task_Priority.list 4_Task_Priority.map default.size.stdout
+	-$(RM) 5_ChangingPriorityInRuntime.elf 5_ChangingPriorityInRuntime.list 5_ChangingPriorityInRuntime.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

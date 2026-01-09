@@ -38,34 +38,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := 9_ResumingATask
+BUILD_ARTIFACT_NAME := 12_KillingATask
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-9_ResumingATask.elf \
+12_KillingATask.elf \
 
 MAP_FILES += \
-9_ResumingATask.map \
+12_KillingATask.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-9_ResumingATask.list \
+12_KillingATask.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: 9_ResumingATask.elf secondary-outputs
+main-build: 12_KillingATask.elf secondary-outputs
 
 # Tool invocations
-9_ResumingATask.elf 9_ResumingATask.map: $(OBJS) $(USER_OBJS) /Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/9_ResumingATask/STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "9_ResumingATask.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/9_ResumingATask/STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="9_ResumingATask.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+12_KillingATask.elf 12_KillingATask.map: $(OBJS) $(USER_OBJS) /Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/12_KillingATask/STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "12_KillingATask.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/12_KillingATask/STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="12_KillingATask.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -74,14 +74,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-9_ResumingATask.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "9_ResumingATask.list"
+12_KillingATask.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "12_KillingATask.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) 9_ResumingATask.elf 9_ResumingATask.list 9_ResumingATask.map default.size.stdout
+	-$(RM) 12_KillingATask.elf 12_KillingATask.list 12_KillingATask.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

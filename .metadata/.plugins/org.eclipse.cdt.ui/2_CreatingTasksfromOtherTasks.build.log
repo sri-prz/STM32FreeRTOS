@@ -1,4 +1,4 @@
-20:45:59 **** Incremental Build of configuration Debug for project 2_CreatingTasksfromOtherTasks ****
+16:19:59 **** Incremental Build of configuration Debug for project 2_CreatingTasksfromOtherTasks ****
 make -j7 all 
 arm-none-eabi-size  2_CreatingTasksfromOtherTasks.elf 
    text	   data	    bss	    dec	    hex	filename
@@ -6,5 +6,5 @@ arm-none-eabi-size  2_CreatingTasksfromOtherTasks.elf
 Finished building: default.size.stdout
  
 
-20:45:59 Build Finished. 0 errors, 0 warnings. (took 249ms)
+16:19:59 Build Finished. 0 errors, 0 warnings. (took 237ms)
 
