@@ -1294,3 +1294,27 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/sheen
 
 !ENTRY org.eclipse.cdt.core 1 0 2026-01-08 08:21:11.966
 !MESSAGE Indexed '19_SomeDrivers' (34 sources, 147 headers) in 4.54 sec: 16,155 declarations; 78,510 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.25%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-08 23:12:14.629
+!MESSAGE Indexed '20_SemaphoreMutex' (37 sources, 150 headers) in 4.37 sec: 16,166 declarations; 78,675 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.25%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-08 23:25:46.482
+!MESSAGE Indexed '21_CountingSemaphore' (38 sources, 179 headers) in 3.69 sec: 18,763 declarations; 83,823 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.23%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-08 23:34:24.291
+!MESSAGE Indexed '22_Gatekeeper' (37 sources, 150 headers) in 2.91 sec: 16,175 declarations; 78,733 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.25%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-10 16:59:35.229
+!MESSAGE Indexed '23_WorkingWithSoftwareTimers' (37 sources, 150 headers) in 5.67 sec: 16,180 declarations; 78,716 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.25%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-10 17:31:17.312
+!MESSAGE Indexed '23_WorkingWithSoftwareTimers2' (0 sources, 0 headers) in 0.016 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-10 17:37:21.856
+!MESSAGE Indexed '22_GakeKeeper' (37 sources, 150 headers) in 3.38 sec: 16,180 declarations; 78,716 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.25%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-10 17:39:00.817
+!MESSAGE Indexed '23_WorkingWithSoftwareTimers' (0 sources, 0 headers) in 0.014 sec: 0 declarations; 0 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-10 17:39:23.746
+!MESSAGE Indexed '24_StoppingTheTimer' (39 sources, 179 headers) in 4.61 sec: 18,358 declarations; 81,886 references; 5 unresolved inclusions; 235 syntax errors; 1,359 unresolved names (1.3%)

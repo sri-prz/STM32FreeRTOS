@@ -1,14 +1,14 @@
-23:08:03 **** Incremental Build of configuration Debug for project 19_SomeDrivers ****
+17:45:11 **** Incremental Build of configuration Debug for project 24_StoppingTheTimer ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../Middlewares/Third_Party/FreeRTOS/Source/include -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "19_SomeDrivers.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/19_SomeDrivers/STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="19_SomeDrivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: 19_SomeDrivers.elf
+arm-none-eabi-gcc -o "24_StoppingTheTimer.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/sheen/Documents/stm32FreeRTOS/FreeRTOS/24_StoppingTheTimer/STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="24_StoppingTheTimer.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 24_StoppingTheTimer.elf
  
-arm-none-eabi-size  19_SomeDrivers.elf 
-arm-none-eabi-objdump -h -S 19_SomeDrivers.elf  > "19_SomeDrivers.list"
+arm-none-eabi-size  24_StoppingTheTimer.elf 
+arm-none-eabi-objdump -h -S 24_StoppingTheTimer.elf  > "24_StoppingTheTimer.list"
    text	   data	    bss	    dec	    hex	filename
-  11384	     12	   2884	  14280	   37c8	19_SomeDrivers.elf
+  25248	    108	  20844	  46200	   b478	24_StoppingTheTimer.elf
 Finished building: default.size.stdout
  
-Finished building: 19_SomeDrivers.list
+Finished building: 24_StoppingTheTimer.list
  
