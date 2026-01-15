@@ -1318,3 +1318,51 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/sheen
 
 !ENTRY org.eclipse.cdt.core 1 0 2026-01-10 17:39:23.746
 !MESSAGE Indexed '24_StoppingTheTimer' (39 sources, 179 headers) in 4.61 sec: 18,358 declarations; 81,886 references; 5 unresolved inclusions; 235 syntax errors; 1,359 unresolved names (1.3%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-10 17:57:11.823
+!MESSAGE Indexed '25_InterractingWithDrivers-UARTRx' (37 sources, 150 headers) in 3.28 sec: 16,166 declarations; 78,675 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.25%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-11 23:14:03.514
+!MESSAGE Indexed '26_InterractingWithDrivers-UARTRxInterrupt' (37 sources, 150 headers) in 4.46 sec: 16,181 declarations; 78,721 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.25%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-11 23:44:57.717
+!MESSAGE Indexed '27_UARTRxInterrupt_Pcks' (37 sources, 150 headers) in 3.84 sec: 16,183 declarations; 78,749 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.25%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-13 15:42:24.480
+!MESSAGE Indexed '28_EventGroups' (38 sources, 179 headers) in 13.4 sec: 18,366 declarations; 81,913 references; 5 unresolved inclusions; 235 syntax errors; 1,356 unresolved names (1.3%)
+
+!ENTRY org.eclipse.cdt.ui 4 0 2026-01-13 16:32:09.180
+!MESSAGE Error in CDT UI during reconcile
+!STACK 1
+C Model Exception: C Model Status [Element main.c does not exist.]
+	at org.eclipse.cdt.internal.core.model.CElement.newNotPresentException(CElement.java:485)
+	at org.eclipse.cdt.internal.core.model.TranslationUnit.makeConsistent(TranslationUnit.java:583)
+	at org.eclipse.cdt.internal.core.model.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:65)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.execute(CModelOperation.java:346)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.run(CModelOperation.java:613)
+	at org.eclipse.cdt.internal.core.model.CModelOperation.runOperation(CModelOperation.java:641)
+	at org.eclipse.cdt.internal.core.model.WorkingCopy.reconcile(WorkingCopy.java:365)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:79)
+	at org.eclipse.cdt.internal.ui.text.CReconcilingStrategy.reconcile(CReconcilingStrategy.java:64)
+	at org.eclipse.cdt.internal.ui.text.CompositeReconcilingStrategy.reconcile(CompositeReconcilingStrategy.java:89)
+	at org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy.reconcile(CCompositeReconcilingStrategy.java:90)
+	at org.eclipse.jface.text.reconciler.MonoReconciler.process(MonoReconciler.java:78)
+	at org.eclipse.cdt.internal.ui.text.CReconciler.process(CReconciler.java:346)
+	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
+!SUBENTRY 1 org.eclipse.cdt.core 4 969 2026-01-13 16:32:09.199
+!MESSAGE Element main.c does not exist.
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-14 00:42:55.384
+!MESSAGE Indexed '29_EventGroupsWithMultipleSetters' (37 sources, 150 headers) in 3.8 sec: 16,181 declarations; 78,742 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.25%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-14 01:03:09.712
+!MESSAGE Indexed '30_SynchingTasksWithEventGroups' (38 sources, 179 headers) in 5.05 sec: 18,360 declarations; 81,847 references; 5 unresolved inclusions; 235 syntax errors; 1,356 unresolved names (1.3%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-14 12:56:37.712
+!MESSAGE Indexed '31_TaskNotifications' (37 sources, 126 headers) in 6.71 sec: 15,015 declarations; 74,951 references; 18 unresolved inclusions; 1,245 syntax errors; 1,497 unresolved names (1.6%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-14 18:51:48.400
+!MESSAGE Indexed '32_TheScheduler-PreemptionOnly' (37 sources, 150 headers) in 4.46 sec: 16,175 declarations; 78,710 references; 1 unresolved inclusions; 202 syntax errors; 241 unresolved names (0.25%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-01-14 19:30:11.184
+!MESSAGE Indexed '33_TheScheduler-PsuedoTimeSlicing' (38 sources, 179 headers) in 4.57 sec: 18,361 declarations; 81,796 references; 5 unresolved inclusions; 235 syntax errors; 1,356 unresolved names (1.3%)
